@@ -1,0 +1,35 @@
+{
+  "name": "lens_pro_back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "cookie-session": "^1.3.3",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "mongoose": "^5.7.3",
+    "nodemon": "^1.19.3",
+    "passport": "^0.4.0",
+    "redis": "^2.8.0",
+    "session-file-store": "^1.3.1",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Senseinvader/lens_pro_back.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Senseinvader/lens_pro_back/issues"
+  },
+  "homepage": "https://github.com/Senseinvader/lens_pro_back#readme"
+}
