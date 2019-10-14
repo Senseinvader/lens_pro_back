@@ -4,17 +4,15 @@ const session = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const keys = require('./keys/dev');
-const bcrypt = require('bcrypt');
-const uuid = require('uuid/v4');
 
 require('./models/User');
-
-
-const app = express();
+require('./models/Post');
+require('./services/passport');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoUrl, {useNewUrlParser: true}).catch(err => console.log('Unable to connect to the database', err));
 
+const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
@@ -26,7 +24,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 require('./routes/authRoutes')(app);
 require('./routes/blogRoutes')(app);

@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 const User = mongoose.model('User');
 
@@ -16,7 +17,7 @@ module.exports = (app) => {
           message: "The user with this email already exists"
         });
       } else {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10).catch(err => res.status(500).json('error', err));
+        const hashedPassword = await bcrypt.hash(req.body.password, 10).catch(err => res.status(500).json({error: err}));
         const newUser = new User({
           id: new mongoose.Types.ObjectId(),
           email: req.body.email,
@@ -33,7 +34,7 @@ module.exports = (app) => {
     }
   });
 
-  app.post('/login', async(req, res, next) => {
+  app.post('/login', passport.authenticate('local'), async(req, res, next) => {
     try {
       console.log(req.body.email)
       const user = await User.findOne({
