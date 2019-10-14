@@ -1,10 +1,12 @@
 const Post = require('../models/Post');
 const mongoose = require('mongoose');
+const requireLogin = require('../middlewares/requireLogin');
 
 
 module.exports = (app) => {
-  app.get('/blogs', async (req, res) => {
+  app.get('/blogs', requireLogin, async (req, res) => {
     try {
+      console.log('request ', req.user)
       const posts = await Post.find({});
       if(!posts.length) {
         return res.status(200).json({message: 'No posts are currently in the database'});
