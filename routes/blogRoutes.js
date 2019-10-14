@@ -20,10 +20,11 @@ module.exports = (app) => {
     }
   });
 
-  app.post('/blogs', async (req, res) => {
+  app.post('/blogs', requireLogin, async (req, res) => {
     try {
       const newPost = new Post({
         id: new mongoose.Types.ObjectId(),
+        author: req.user.id,
         title: req.body.title,
         content: req.body.content
       });
