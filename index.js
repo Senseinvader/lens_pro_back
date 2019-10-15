@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const session = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const cors = require('cors');
 const keys = require('./keys/dev');
 
 require('./models/User');
@@ -16,6 +17,18 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+app.use(cors({credentials: true, origin: true}));
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', "http://localhost:8080");
+  res.header('Access-Control-Allow-Header', 'Origin, Authorization, Content-Type, Accept');
+  if(req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
+    res.status(200).json({});
+  }
+  next();
+});
 
 app.use(session({
   maxAge: 30 * 24 * 60 * 1000,
