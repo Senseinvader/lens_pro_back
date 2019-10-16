@@ -20,6 +20,22 @@ module.exports = (app) => {
     }
   });
 
+  app.get('/myblogs', requireLogin, async (req, res, next) => {
+    try {
+      console.log(req.user.id);
+      const myPosts = await Post.find({author: req.user.id});
+      if(!myPosts.length) {
+        return res.status(200).json({message: 'You don\'t have posts yet'});
+      }
+      return res.status(200).json({
+        message: 'Posts fetched successfully',
+        posts: myPosts
+      })
+    } catch (err) {
+      return res.json({message: `Error ${err}`});
+    }
+  });
+
   app.post('/blogs', requireLogin, async (req, res) => {
     try {
       const newPost = new Post({
@@ -29,12 +45,13 @@ module.exports = (app) => {
         content: req.body.content
       });
       await newPost.save();
+      const posts = await Post.find({});
       return res.status(201).json({
         message: 'Post has been successfully sent to the database',
-        post: newPost
+        posts: posts
       });
     } catch (err) {
       res.json({message: `Error ${err}`});
     }
-  })
+  });
 };
