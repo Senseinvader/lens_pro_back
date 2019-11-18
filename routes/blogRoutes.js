@@ -43,7 +43,7 @@ module.exports = (app) => {
         content: req.body.content
       });
       await newPost.save();
-      const posts = await Post.find({});
+      let posts = await Post.find({author: req.query.id});
       return res.status(201).json({
         message: 'Post has been successfully sent to the database',
         posts: posts
